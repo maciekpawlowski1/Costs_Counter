@@ -1,8 +1,11 @@
-package com.pawlowski.costscounter.presentation
+package com.pawlowski.costscounter.presentation.report
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.pawlowski.costscounter.CostsReport
 import com.pawlowski.costscounter.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -12,10 +15,21 @@ class ReportsActivity : AppCompatActivity() {
 
     private val viewModel: ReportsActivityViewModel by viewModels()
 
+    private lateinit var recycler: RecyclerView
+    private val adapter = ReportsAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_report)
 
+        recycler = findViewById(R.id.cost_report_recycler_report_activity)
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = adapter
+
+        viewModel.reports.observe(this)
+        {
+            adapter.reports = it
+        }
 
 //        val workBook: Workbook = XSSFWorkbook()
 //        val sheetsGenerator: ExcelSheetsGenerator = ExcelSheetsGeneratorImpl(workBook, ExcelStylesUtil(workBook))

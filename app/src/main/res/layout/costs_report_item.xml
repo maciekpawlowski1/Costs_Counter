@@ -38,11 +38,11 @@
             android:layout_marginEnd="2dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/delete_icon_cost_report_item"
+            app:layout_constraintEnd_toStartOf="@+id/delete_button_cost_report_item"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/delete_icon_cost_report_item"
+            android:id="@+id/delete_button_cost_report_item"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:backgroundTint="@color/white"
