@@ -1,4 +1,4 @@
-package com.pawlowski.costscounter.presentation.reports_details
+package com.pawlowski.costscounter.presentation.report_details
 
 import android.os.Bundle
 import android.os.PersistableBundle
