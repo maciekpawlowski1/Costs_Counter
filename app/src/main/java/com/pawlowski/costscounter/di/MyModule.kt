@@ -1,7 +1,7 @@
 package com.pawlowski.costscounter.di
 
-import com.pawlowski.costscounter.domain.CostCollectionsRepository
-import com.pawlowski.costscounter.domain.CostCollectionsRepositoryImpl
+import com.pawlowski.costscounter.domain.CostReportRepository
+import com.pawlowski.costscounter.domain.CostReportRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ class MyModule {
 
     @ViewModelScoped
     @Provides
-    fun costCollectionsRepository(costCollectionsRepositoryImpl: CostCollectionsRepositoryImpl): CostCollectionsRepository
+    fun costCollectionsRepository(costCollectionsRepositoryImpl: CostReportRepositoryImpl): CostReportRepository
     {
         return costCollectionsRepositoryImpl
     }

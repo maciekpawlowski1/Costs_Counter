@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Costs Counter</string>
+    <string name="delete_group">Delete raport</string>
 </resources>

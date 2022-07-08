@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CostsCounter">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.ReportsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
