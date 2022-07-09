@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.pawlowski.costscounter.CostsReport
 import com.pawlowski.costscounter.R
 import dagger.hilt.android.AndroidEntryPoint
 

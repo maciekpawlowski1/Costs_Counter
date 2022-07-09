@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.pawlowski.costscounter.CostsReport
+import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.R
 
 class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
-    var reports: List<CostsReport> = listOf()
+    var reports: List<ReportEntity> = listOf()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -21,7 +21,9 @@ class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ReportsViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentReport = reports[position]
+        holder.tittleTextView.text = currentReport.reportName
+        holder.dateTextView.text = currentReport.dateText
     }
 
     override fun getItemCount(): Int {

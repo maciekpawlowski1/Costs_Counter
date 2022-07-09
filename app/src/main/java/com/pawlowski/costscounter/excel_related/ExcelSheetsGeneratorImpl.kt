@@ -1,6 +1,6 @@
 package com.pawlowski.costscounter.excel_related
 
-import com.pawlowski.costscounter.CostItem
+import com.pawlowski.costscounter.models.CostItem
 import org.apache.poi.ss.usermodel.*
 
 class ExcelSheetsGeneratorImpl(private val workBook: Workbook, private val stylesUtil: ExcelStylesUtil) :

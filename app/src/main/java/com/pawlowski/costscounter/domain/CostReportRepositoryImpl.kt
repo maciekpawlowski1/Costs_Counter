@@ -1,28 +1,32 @@
 package com.pawlowski.costscounter.domain
 
-import com.pawlowski.costscounter.CostsReport
+import com.pawlowski.costscounter.data.db.daos.ReportsDao
+import com.pawlowski.costscounter.data.entities.ReportEntity
+import com.pawlowski.costscounter.data.entities.ReportWithItemsAndCategories
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class CostReportRepositoryImpl @Inject constructor() : CostReportRepository {
+class CostReportRepositoryImpl @Inject constructor(
+    private val reportsDao: ReportsDao
+) : CostReportRepository {
 
-    override suspend fun getReport(reportId: Int): CostsReport
+    override suspend fun getReport(reportId: Int): ReportWithItemsAndCategories
     {
-        TODO()
+        return reportsDao.getReport(reportId)
     }
 
-    override suspend fun getAllReports(): List<CostsReport>
+    override suspend fun getAllReports(): List<ReportEntity>
     {
-        TODO()
+        return reportsDao.getAllReports()
     }
 
-    override suspend fun createNewReport(name: String): Int
+    override suspend fun createNewReport(name: String, dateText: String)
     {
-        TODO()
+        reportsDao.createNewReport(ReportEntity(0, name, dateText))
     }
 
-    override suspend fun editReport(report: CostsReport)
+    override suspend fun editReport(report: ReportEntity)
     {
         TODO()
     }

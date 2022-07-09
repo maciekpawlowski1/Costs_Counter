@@ -2,6 +2,7 @@ package com.pawlowski.costscounter.presentation.report_details
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.pawlowski.costscounter.R
 import dagger.hilt.android.AndroidEntryPoint
@@ -9,6 +10,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ReportDetailsActivity: AppCompatActivity() {
+
+    private val viewModel by viewModels<ReportDetailsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)

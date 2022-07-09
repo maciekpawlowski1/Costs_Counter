@@ -4,8 +4,8 @@ import com.pawlowski.costscounter.domain.CostReportRepository
 import javax.inject.Inject
 
 class InsertReportUseCase @Inject constructor(private val repository: CostReportRepository) {
-    suspend fun execute(reportName: String): Int
+    suspend fun execute(reportName: String, dateText: String)
     {
-        return repository.createNewReport(reportName)
+        repository.createNewReport(reportName, dateText)
     }
 }

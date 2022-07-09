@@ -1,7 +1,7 @@
 package com.pawlowski.costscounter.presentation.report
 
 import androidx.lifecycle.*
-import com.pawlowski.costscounter.CostsReport
+import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.domain.use_cases.DeleteReportUseCase
 import com.pawlowski.costscounter.domain.use_cases.GetReportUseCase
 import com.pawlowski.costscounter.domain.use_cases.InsertReportUseCase
@@ -17,16 +17,17 @@ class ReportsActivityViewModel @Inject constructor(
     private val deleteReportUseCase: DeleteReportUseCase
     ): ViewModel() {
 
-    val reports: LiveData<List<CostsReport>> get() = reports_
+    val reports: LiveData<List<ReportEntity>> get() = reports_
 
-    private val reports_: MutableLiveData<List<CostsReport>> by lazy {
+    private val reports_: MutableLiveData<List<ReportEntity>> by lazy {
         MutableLiveData()
     }
 
     fun insertNewReport(name: String)
     {
+        //TODO: Change date
         viewModelScope.launch {
-            val id = insertReportUseCase.execute(name)
+            insertReportUseCase.execute(name, "testDate")
             reports_.value = getReportUseCase.execute()
         }
     }
