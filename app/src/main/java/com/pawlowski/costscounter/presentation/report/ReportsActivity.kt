@@ -3,6 +3,7 @@ package com.pawlowski.costscounter.presentation.report
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,9 +37,7 @@ class ReportsActivity : AppCompatActivity(), ReportsAdapter.CardItemClickListene
             adapter.reports = it
         }
 
-        addButton.setOnClickListener {
-            viewModel.insertNewReport("testowy report")
-        }
+        addButton.setOnClickListener(this::onAddClickListener)
 
 
 //        val workBook: Workbook = XSSFWorkbook()
@@ -52,6 +51,11 @@ class ReportsActivity : AppCompatActivity(), ReportsAdapter.CardItemClickListene
 //
 //        val excelSaver: ExcelSaver = ExcelSaverInDocumentsImpl()
 //        excelSaver.save("wydatki", workBook)
+    }
+
+    private fun onAddClickListener(view: View)
+    {
+        viewModel.insertNewReport("testowy report")
     }
 
     override fun onDeleteClick(reportEntity: ReportEntity) {

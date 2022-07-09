@@ -37,7 +37,7 @@ class CostReportRepositoryImpl @Inject constructor(
 
     override suspend fun deleteReport(reportId: Int)
     {
-        withContext(Dispatchers.IO + NonCancellable)
+        withContext(NonCancellable)
         {
             reportsDao.deleteReport(reportId)
             reportsDao.deleteReportCategories(reportId)

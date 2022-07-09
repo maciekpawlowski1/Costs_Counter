@@ -9,9 +9,7 @@ interface CostReportRepository {
 
     fun getAllReports(): Flow<List<ReportEntity>>
 
-    /**
-     * @return id of new collection
-     */
+
     suspend fun createNewReport(name: String, dateText: String)
 
     suspend fun editReport(report: ReportEntity)
