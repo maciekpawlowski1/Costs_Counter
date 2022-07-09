@@ -4,6 +4,10 @@ import com.pawlowski.costscounter.data.db.daos.ReportsDao
 import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.data.entities.ReportWithItemsAndCategories
 import dagger.hilt.android.scopes.ViewModelScoped
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -11,12 +15,12 @@ class CostReportRepositoryImpl @Inject constructor(
     private val reportsDao: ReportsDao
 ) : CostReportRepository {
 
-    override suspend fun getReport(reportId: Int): ReportWithItemsAndCategories
+    override fun getReport(reportId: Int): Flow<ReportWithItemsAndCategories>
     {
         return reportsDao.getReport(reportId)
     }
 
-    override suspend fun getAllReports(): List<ReportEntity>
+    override fun getAllReports(): Flow<List<ReportEntity>>
     {
         return reportsDao.getAllReports()
     }
@@ -33,6 +37,13 @@ class CostReportRepositoryImpl @Inject constructor(
 
     override suspend fun deleteReport(reportId: Int)
     {
-        TODO()
+        withContext(Dispatchers.IO + NonCancellable)
+        {
+            reportsDao.deleteReport(reportId)
+            reportsDao.deleteReportCategories(reportId)
+            reportsDao.deleteReportItems(reportId)
+            //TODO: Delete Category Items
+            //TODO: Maybe change for auto cascade delete
+        }
     }
 }

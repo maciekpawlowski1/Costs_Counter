@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.R
 
-class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
+class ReportsAdapter(private val cardItemClickListeners: CardItemClickListeners): RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
     var reports: List<ReportEntity> = listOf()
         set(value) {
             field = value
@@ -24,6 +25,14 @@ class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
         val currentReport = reports[position]
         holder.tittleTextView.text = currentReport.reportName
         holder.dateTextView.text = currentReport.dateText
+
+        holder.deleteButton.setOnClickListener {
+            cardItemClickListeners.onDeleteClick(currentReport)
+        }
+
+        holder.cardView.setOnClickListener {
+            cardItemClickListeners.onCardClick(currentReport)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -35,5 +44,12 @@ class ReportsAdapter: RecyclerView.Adapter<ReportsAdapter.ReportsViewHolder>() {
         val tittleTextView = itemView.findViewById<TextView>(R.id.tittle_text_cost_report_item)
         val dateTextView = itemView.findViewById<TextView>(R.id.date_text_cost_report)
         val deleteButton = itemView.findViewById<ImageButton>(R.id.delete_button_cost_report_item)
+        val cardView = itemView.findViewById<CardView>(R.id.card_view_cost_report)
+    }
+
+    interface CardItemClickListeners
+    {
+        fun onDeleteClick(reportEntity: ReportEntity)
+        fun onCardClick(reportEntity: ReportEntity)
     }
 }

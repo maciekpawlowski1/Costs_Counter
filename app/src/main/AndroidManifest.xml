@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".presentation.report_details.ReportDetailsActivity"
+        <activity
+            android:name=".presentation.report_details.ReportDetailsActivity"
             android:exported="false"/>
 
     </application>

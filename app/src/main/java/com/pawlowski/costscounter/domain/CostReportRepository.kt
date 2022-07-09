@@ -2,11 +2,12 @@ package com.pawlowski.costscounter.domain
 
 import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.data.entities.ReportWithItemsAndCategories
+import kotlinx.coroutines.flow.Flow
 
 interface CostReportRepository {
-    suspend fun getReport(reportId: Int): ReportWithItemsAndCategories
+    fun getReport(reportId: Int): Flow<ReportWithItemsAndCategories>
 
-    suspend fun getAllReports(): List<ReportEntity>
+    fun getAllReports(): Flow<List<ReportEntity>>
 
     /**
      * @return id of new collection

@@ -17,25 +17,22 @@ class ReportsActivityViewModel @Inject constructor(
     private val deleteReportUseCase: DeleteReportUseCase
     ): ViewModel() {
 
-    val reports: LiveData<List<ReportEntity>> get() = reports_
+    val reports: LiveData<List<ReportEntity>> = getReportUseCase.execute().asLiveData()
 
-    private val reports_: MutableLiveData<List<ReportEntity>> by lazy {
-        MutableLiveData()
-    }
 
     fun insertNewReport(name: String)
     {
         //TODO: Change date
         viewModelScope.launch {
             insertReportUseCase.execute(name, "testDate")
-            reports_.value = getReportUseCase.execute()
         }
     }
 
-    init {
+    fun deleteReport(reportEntity: ReportEntity)
+    {
         viewModelScope.launch {
-            reports_.value = getReportUseCase.execute()
+            deleteReportUseCase.execute(reportEntity.reportId)
         }
-
     }
+
 }

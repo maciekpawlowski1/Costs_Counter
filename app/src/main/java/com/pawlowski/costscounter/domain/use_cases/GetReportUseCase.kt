@@ -4,23 +4,18 @@ import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.data.entities.ReportWithItemsAndCategories
 import com.pawlowski.costscounter.domain.CostReportRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetReportUseCase @Inject constructor(private val repository: CostReportRepository) {
-    suspend fun execute(): List<ReportEntity>
+    fun execute(): Flow<List<ReportEntity>>
     {
-        return withContext(Dispatchers.IO)
-        {
-            return@withContext repository.getAllReports()
-        }
+        return repository.getAllReports()
     }
 
-    suspend fun execute(reportId: Int): ReportWithItemsAndCategories
+    fun execute(reportId: Int): Flow<ReportWithItemsAndCategories>
     {
-        return withContext(Dispatchers.IO)
-        {
-            return@withContext repository.getReport(reportId)
-        }
+        return repository.getReport(reportId)
     }
 }

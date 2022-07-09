@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_cost_report"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_marginTop="5dp">
@@ -10,15 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/date_text_cost_report"
+        <ImageButton
+            android:id="@+id/delete_button_cost_report_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:text="08.07.2022"
+            android:layout_height="0dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="@string/delete_group"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tittle_text_cost_report_item"
-            app:layout_constraintTop_toBottomOf="@+id/tittle_text_cost_report_item" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/delete_icon" />
 
         <TextView
             android:id="@+id/tittle_text_cost_report_item"
@@ -31,6 +33,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/date_text_cost_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:text="08.07.2022"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tittle_text_cost_report_item"
+            app:layout_constraintTop_toBottomOf="@+id/tittle_text_cost_report_item" />
+
         <View
             android:id="@+id/divider"
             android:layout_width="1dp"
@@ -40,17 +52,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/delete_button_cost_report_item"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/delete_button_cost_report_item"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:backgroundTint="@color/white"
-            android:contentDescription="@string/delete_group"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/delete_icon" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

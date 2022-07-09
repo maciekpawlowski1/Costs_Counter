@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ReportEntity(
-    @PrimaryKey val reportId: Int,
+    @PrimaryKey(autoGenerate = true) val reportId: Int,
     val reportName: String,
     val dateText: String
 )

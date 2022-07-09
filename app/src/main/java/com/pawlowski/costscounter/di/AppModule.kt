@@ -28,7 +28,8 @@ class AppModule {
     {
         return Room.databaseBuilder(appContext,
                 ReportsDatabase::class.java, "reports-database"
-            ).build()
+            ).fallbackToDestructiveMigrationOnDowngrade()
+            .build()
     }
 
     @Singleton

@@ -9,11 +9,12 @@ data class ReportWithItemsAndCategories(
         parentColumn = "reportId",
         entityColumn = "reportId"
     )
-    val costItems: List<CostItemEntity>
+    val costItems: List<CostItemEntity>,
 
-//    @Relation(
-//        parentColumn = "reportId",
-//        entityColumn = "reportId"
-//    )
-//    val categoryItems: List<CategoryWithItems>
+    @Relation(
+        entity = CategoryEntity::class,
+        parentColumn = "reportId",
+        entityColumn = "reportId"
+    )
+    val categoryItems: List<CategoryWithItems>
 )

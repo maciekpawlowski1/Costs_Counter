@@ -8,7 +8,7 @@ import com.pawlowski.costscounter.data.entities.CategoryEntity
 import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.data.entities.ReportEntity
 
-@Database(entities = [CategoryEntity::class, ReportEntity::class, CostItemEntity::class, CategoryCostItemEntity::class], version = 3)
+@Database(entities = [CategoryEntity::class, ReportEntity::class, CostItemEntity::class, CategoryCostItemEntity::class], version = 1)
 abstract class ReportsDatabase: RoomDatabase() {
     abstract fun reportsDao(): ReportsDao
 }

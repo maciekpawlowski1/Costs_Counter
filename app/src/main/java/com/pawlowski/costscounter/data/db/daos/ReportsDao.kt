@@ -3,7 +3,10 @@ package com.pawlowski.costscounter.data.db.daos
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
 import com.pawlowski.costscounter.data.entities.*
+import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface ReportsDao {
@@ -19,9 +22,22 @@ interface ReportsDao {
 
     @Insert fun insertNewCategory(categoryEntity: CategoryEntity)
 
+    @Transaction
     @Query("SELECT * FROM ReportEntity WHERE reportId = :reportId")
-    suspend fun getReport(reportId: Int): ReportWithItemsAndCategories
+    fun getReport(reportId: Int): Flow<ReportWithItemsAndCategories>
 
     @Query("SELECT * FROM ReportEntity")
-    suspend fun getAllReports(): List<ReportEntity>
+    fun getAllReports(): Flow<List<ReportEntity>>
+
+    @Query("DELETE FROM ReportEntity WHERE reportId = :reportId")
+    suspend fun deleteReport(reportId: Int)
+
+    @Query("DELETE FROM CostItemEntity WHERE reportId = :reportId")
+    suspend fun deleteReportItems(reportId: Int)
+
+    @Query("DELETE FROM CategoryEntity WHERE reportId = :reportId")
+    suspend fun deleteReportCategories(reportId: Int)
+
+    @Query("DELETE FROM CategoryCostItemEntity WHERE categoryId = :categoryId")
+    suspend fun deleteCategoryItems(categoryId: Int)
 }
