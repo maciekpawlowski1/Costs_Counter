@@ -7,4 +7,10 @@
         android:icon="@drawable/share_icon"
         android:title="Share"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/add_category_button_report_details_menu"
+        android:title="Add category" />
+    <item
+        android:id="@+id/add_from_template_button_report_details_menu"
+        android:title="Add from templates" />
 </menu>

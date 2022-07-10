@@ -1,8 +1,6 @@
 package com.pawlowski.costscounter.presentation.report_details
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -49,6 +47,16 @@ class ReportDetailsActivity: AppCompatActivity() {
         viewModel.insertNewItem("test item", 10.50)
     }
 
+    private fun onAddCategoryClick(item: MenuItem)
+    {
+        TODO("Not implemented yet")
+    }
+
+    private fun onAddFromTemplateClick(item:MenuItem)
+    {
+        TODO("Not implemented yet")
+    }
+
     private fun onShareButtonClick(item: MenuItem)
     {
         TODO("Not implemented yet")
@@ -68,6 +76,16 @@ class ReportDetailsActivity: AppCompatActivity() {
             R.id.share_button_report_details_menu ->
             {
                 onShareButtonClick(item)
+                return true
+            }
+            R.id.add_category_button_report_details_menu ->
+            {
+                onAddCategoryClick(item)
+                return true
+            }
+            R.id.add_from_template_button_report_details_menu ->
+            {
+                onAddFromTemplateClick(item)
                 return true
             }
         }

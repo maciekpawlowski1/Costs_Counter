@@ -41,10 +41,10 @@ class ReportsAdapter(private val cardItemClickListeners: CardItemClickListeners)
 
     class ReportsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        val tittleTextView = itemView.findViewById<TextView>(R.id.tittle_text_cost_report_item)
-        val dateTextView = itemView.findViewById<TextView>(R.id.date_text_cost_report)
-        val deleteButton = itemView.findViewById<ImageButton>(R.id.delete_button_cost_report_item)
-        val cardView = itemView.findViewById<CardView>(R.id.card_view_cost_report)
+        val tittleTextView: TextView = itemView.findViewById(R.id.tittle_text_cost_report_item)
+        val dateTextView: TextView = itemView.findViewById(R.id.date_text_cost_report)
+        val deleteButton: ImageButton = itemView.findViewById(R.id.delete_button_cost_report_item)
+        val cardView: CardView = itemView.findViewById(R.id.card_view_cost_report)
     }
 
     interface CardItemClickListeners
