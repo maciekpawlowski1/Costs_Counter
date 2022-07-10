@@ -3,6 +3,8 @@ package com.pawlowski.costscounter.presentation.report
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,4 +69,5 @@ class ReportsActivity : AppCompatActivity(), ReportsAdapter.CardItemClickListene
         i.putExtra("reportId", reportEntity.reportId)
         startActivity(i)
     }
+
 }

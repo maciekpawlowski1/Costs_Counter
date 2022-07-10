@@ -1,6 +1,7 @@
 package com.pawlowski.costscounter.domain
 
 import com.pawlowski.costscounter.data.db.daos.ReportsDao
+import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.data.entities.ReportWithItemsAndCategories
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -23,6 +24,14 @@ class CostReportRepositoryImpl @Inject constructor(
     override fun getAllReports(): Flow<List<ReportEntity>>
     {
         return reportsDao.getAllReports()
+    }
+
+    override suspend fun insertNewItem(reportId: Int, name: String, cost: Double) {
+        reportsDao.insertItem(CostItemEntity(0, reportId, name, cost, amount = 1))
+    }
+
+    override suspend fun deleteItem(costItemEntity: CostItemEntity) {
+        TODO("Not yet implemented")
     }
 
     override suspend fun createNewReport(name: String, dateText: String)
