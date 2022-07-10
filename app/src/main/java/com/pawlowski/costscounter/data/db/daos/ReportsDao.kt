@@ -18,7 +18,7 @@ interface ReportsDao {
     suspend fun insertItem(costItemEntity: CostItemEntity)
 
     @Insert
-    suspend fun insertCategoryItem(categoryCostItemEntity: CategoryCostItemEntity)
+    suspend fun insertCategoryItem(categoryCostItemEntity: CategoryCostItemEntity): Long
 
     @Insert
     suspend fun insertNewCategory(categoryEntity: CategoryEntity): Long

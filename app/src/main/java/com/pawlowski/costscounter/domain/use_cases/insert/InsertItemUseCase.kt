@@ -1,4 +1,4 @@
-package com.pawlowski.costscounter.domain.use_cases
+package com.pawlowski.costscounter.domain.use_cases.insert
 
 import com.pawlowski.costscounter.domain.CostReportRepository
 import kotlinx.coroutines.Dispatchers

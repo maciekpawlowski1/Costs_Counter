@@ -1,4 +1,4 @@
-package com.pawlowski.costscounter.domain.use_cases
+package com.pawlowski.costscounter.domain.use_cases.edit
 
 import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.domain.CostReportRepository

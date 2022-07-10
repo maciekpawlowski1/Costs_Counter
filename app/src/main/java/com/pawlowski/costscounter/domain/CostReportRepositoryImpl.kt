@@ -31,6 +31,10 @@ class CostReportRepositoryImpl @Inject constructor(
         return reportsDao.insertNewCategory(CategoryEntity(0, reportId, name))
     }
 
+    override suspend fun insertItemToCategory(categoryId: Int, name: String, cost: Double, amount: Int): Long {
+        return reportsDao.insertCategoryItem(CategoryCostItemEntity(0, categoryId, name, cost, amount))
+    }
+
     override suspend fun insertNewItem(reportId: Int, name: String, cost: Double, amount: Int) {
         reportsDao.insertItem(CostItemEntity(0, reportId, name, cost, amount))
     }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,8 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
     private lateinit var addButton: FloatingActionButton
     private val adapter = ReportItemsAdapter()
 
+    private val viewModel by viewModels<CategoryActivityViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
@@ -28,8 +31,13 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
 
-
         addButton.setOnClickListener(this::onAddButtonClick)
+
+
+        viewModel.category.observe(this)
+        {
+            //adapter.resetItemsAndCategories(it.items, listOf())
+        }
     }
 
     private fun onAddButtonClick(v: View)
@@ -39,7 +47,7 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
     }
 
     override fun onAddButtonInDialogClick(name: String, cost: Double, amount: Int) {
-        TODO("Not yet implemented")
+        viewModel.insertItemToCategory(name, cost, amount)
     }
 
     companion object {

@@ -15,6 +15,8 @@ interface CostReportRepository {
 
     suspend fun insertNewCategory(reportId: Int, name: String): Long
 
+    suspend fun insertItemToCategory(categoryId: Int, name: String, cost: Double, amount: Int): Long
+
     suspend fun insertNewItem(reportId: Int, name: String, cost: Double, amount: Int)
 
 
