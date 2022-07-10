@@ -4,12 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.pawlowski.costscounter.R
+import com.pawlowski.costscounter.data.entities.CategoryEntity
 import com.pawlowski.costscounter.data.entities.CategoryWithItems
 import com.pawlowski.costscounter.data.entities.CostItemEntity
 
-class ReportItemsAdapter: RecyclerView.Adapter<ReportItemsAdapter.ReportItemHolder>() {
+class ReportItemsAdapter(private val itemOrCategoryButtonsClickListener: ItemOrCategoryButtonsClickListener): RecyclerView.Adapter<ReportItemsAdapter.ReportItemHolder>() {
 
     private var itemsAndCategories: List<Any> = listOf()
 
@@ -46,13 +48,20 @@ class ReportItemsAdapter: RecyclerView.Adapter<ReportItemsAdapter.ReportItemHold
         {
             val currentItem = currentItemOrCategory as CostItemEntity
             holder.tittleTextView.text = currentItem.name
-            holder.costTextView.text = "${currentItem.cost}"
+            holder.costTextView.text = "${"%.2f".format(currentItem.cost)}"
+            holder.elementsCountTextView.text = "(${currentItem.amount}x)"
         }
         else if(currentItemOrCategory is CategoryWithItems)
         {
             val currentCategory = currentItemOrCategory as CategoryWithItems
             holder.categoryTittleTextView.text = currentCategory.categoryEntity.categoryName
-            holder.categoryElementsCountTextView.text = "${currentCategory.items.size}"
+
+            val sum = currentCategory.items.sumOf { it.cost*it.amount }
+            holder.summaryCostText.text = "${"%.2f".format(sum)}"
+
+            holder.categoryCardView.setOnClickListener {
+                itemOrCategoryButtonsClickListener.onCategoryCardClick(currentCategory.categoryEntity)
+            }
         }
     }
 
@@ -72,23 +81,32 @@ class ReportItemsAdapter: RecyclerView.Adapter<ReportItemsAdapter.ReportItemHold
         //If it's cost item
         lateinit var tittleTextView: TextView
         lateinit var costTextView: TextView
+        lateinit var elementsCountTextView: TextView
 
         //If it's category item
         lateinit var categoryTittleTextView: TextView
-        lateinit var categoryElementsCountTextView: TextView
+        lateinit var summaryCostText: TextView
+        lateinit var categoryCardView: CardView
 
         init {
             if(viewType == COST_ITEM_VIEW)
             {
                 tittleTextView = itemView.findViewById(R.id.tittle_text_cost_item)
                 costTextView = itemView.findViewById(R.id.cost_text_cost_item)
+                elementsCountTextView = itemView.findViewById(R.id.elements_count_text_cost_item)
             }
             else
             {
                 categoryTittleTextView = itemView.findViewById(R.id.tittle_text_category_item)
-                categoryElementsCountTextView = itemView.findViewById(R.id.elements_count_text_category_item)
+                summaryCostText = itemView.findViewById(R.id.summary_cost_text_category_item)
+                categoryCardView = itemView.findViewById(R.id.card_view_category_item)
             }
 
         }
+    }
+
+    interface ItemOrCategoryButtonsClickListener
+    {
+        fun onCategoryCardClick(categoryEntity: CategoryEntity)
     }
 }

@@ -12,17 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pawlowski.costscounter.R
+import com.pawlowski.costscounter.data.entities.CategoryEntity
 import com.pawlowski.costscounter.presentation.category.CategoryActivity
 import com.pawlowski.costscounter.presentation.report_details.dialogs.AddItemDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsClickListener {
+class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsClickListener,
+    ReportItemsAdapter.ItemOrCategoryButtonsClickListener {
 
     private val viewModel by viewModels<ReportDetailsViewModel>()
 
-    private val adapter: ReportItemsAdapter = ReportItemsAdapter()
+    private val adapter: ReportItemsAdapter = ReportItemsAdapter(this)
     private lateinit var recycler: RecyclerView
     private lateinit var addButton: FloatingActionButton
 
@@ -111,5 +113,9 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
             i.putExtra("reportId", reportId)
             context.startActivity(i)
         }
+    }
+
+    override fun onCategoryCardClick(categoryEntity: CategoryEntity) {
+        CategoryActivity.launch(this, categoryEntity.categoryId)
     }
 }
