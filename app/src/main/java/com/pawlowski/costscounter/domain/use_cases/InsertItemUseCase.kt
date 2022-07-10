@@ -7,11 +7,11 @@ import javax.inject.Inject
 
 class InsertItemUseCase@Inject constructor(private val repository: CostReportRepository) {
 
-    suspend fun execute(reportId: Int, name: String, cost: Double)
+    suspend fun execute(reportId: Int, name: String, cost: Double, amount: Int)
     {
         withContext(Dispatchers.IO)
         {
-            repository.insertNewItem(reportId, name, cost)
+            repository.insertNewItem(reportId, name, cost, amount)
         }
     }
 }

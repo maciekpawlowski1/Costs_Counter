@@ -10,7 +10,7 @@ interface CostReportRepository {
 
     fun getAllReports(): Flow<List<ReportEntity>>
 
-    suspend fun insertNewItem(reportId: Int, name: String, cost: Double)
+    suspend fun insertNewItem(reportId: Int, name: String, cost: Double, amount: Int)
 
     suspend fun deleteItem(costItemEntity: CostItemEntity)
 

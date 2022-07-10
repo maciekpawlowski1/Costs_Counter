@@ -25,8 +25,8 @@ class CostReportRepositoryImpl @Inject constructor(
         return reportsDao.getAllReports()
     }
 
-    override suspend fun insertNewItem(reportId: Int, name: String, cost: Double) {
-        reportsDao.insertItem(CostItemEntity(0, reportId, name, cost, amount = 1))
+    override suspend fun insertNewItem(reportId: Int, name: String, cost: Double, amount: Int) {
+        reportsDao.insertItem(CostItemEntity(0, reportId, name, cost, amount))
     }
 
     override suspend fun deleteItem(costItemEntity: CostItemEntity) {

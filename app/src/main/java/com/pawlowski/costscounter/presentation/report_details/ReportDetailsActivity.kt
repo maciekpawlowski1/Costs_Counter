@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pawlowski.costscounter.R
+import com.pawlowski.costscounter.presentation.report_details.dialogs.AddItemDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ReportDetailsActivity: AppCompatActivity() {
+class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsClickListener {
 
     private val viewModel by viewModels<ReportDetailsViewModel>()
 
@@ -44,7 +45,8 @@ class ReportDetailsActivity: AppCompatActivity() {
 
     private fun onAddButtonClick(v: View)
     {
-        viewModel.insertNewItem("test item", 10.50)
+        val dialog = AddItemDialog(this)
+        dialog.show(supportFragmentManager, "addItemDialog")
     }
 
     private fun onAddCategoryClick(item: MenuItem)
@@ -61,6 +63,12 @@ class ReportDetailsActivity: AppCompatActivity() {
     {
         TODO("Not implemented yet")
     }
+
+    override fun onAddButtonInDialogClick(name: String, cost: Double, amount: Int) {
+        viewModel.insertNewItem(name, cost, amount)
+    }
+
+
 
 
 

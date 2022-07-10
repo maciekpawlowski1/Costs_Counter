@@ -26,10 +26,10 @@ class ReportDetailsViewModel @Inject constructor(
     val report = getReportUseCase.execute(reportId).asLiveData()
 
 
-    fun insertNewItem(name: String, cost: Double)
+    fun insertNewItem(name: String, cost: Double, amount:Int)
     {
         viewModelScope.launch {
-            insertItemUseCase.execute(reportId, name, cost)
+            insertItemUseCase.execute(reportId, name, cost, amount)
         }
     }
 

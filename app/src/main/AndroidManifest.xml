@@ -22,7 +22,8 @@
 
         <activity
             android:name=".presentation.report_details.ReportDetailsActivity"
-            android:exported="false"/>
+            android:exported="false"
+            android:parentActivityName=".presentation.report.ReportsActivity"/>
 
     </application>
 
