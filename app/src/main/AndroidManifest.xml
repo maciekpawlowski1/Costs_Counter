@@ -25,6 +25,11 @@
             android:exported="false"
             android:parentActivityName=".presentation.report.ReportsActivity"/>
 
+        <activity
+            android:name=".presentation.category.CategoryActivity"
+            android:exported="false"
+            android:parentActivityName=".presentation.report_details.ReportDetailsActivity"/>
+
     </application>
 
 </manifest>

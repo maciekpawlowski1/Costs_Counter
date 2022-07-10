@@ -20,11 +20,16 @@ interface ReportsDao {
     @Insert
     suspend fun insertCategoryItem(categoryCostItemEntity: CategoryCostItemEntity)
 
-    @Insert fun insertNewCategory(categoryEntity: CategoryEntity)
+    @Insert
+    suspend fun insertNewCategory(categoryEntity: CategoryEntity): Long
 
     @Transaction
     @Query("SELECT * FROM ReportEntity WHERE reportId = :reportId")
     fun getReport(reportId: Int): Flow<ReportWithItemsAndCategories>
+
+    @Transaction
+    @Query("SELECT * FROM CategoryEntity WHERE categoryId = :categoryId")
+    fun getCategory(categoryId: Int): Flow<CategoryWithItems>
 
     @Query("SELECT * FROM ReportEntity")
     fun getAllReports(): Flow<List<ReportEntity>>

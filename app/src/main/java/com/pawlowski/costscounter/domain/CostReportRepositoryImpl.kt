@@ -1,9 +1,7 @@
 package com.pawlowski.costscounter.domain
 
 import com.pawlowski.costscounter.data.db.daos.ReportsDao
-import com.pawlowski.costscounter.data.entities.CostItemEntity
-import com.pawlowski.costscounter.data.entities.ReportEntity
-import com.pawlowski.costscounter.data.entities.ReportWithItemsAndCategories
+import com.pawlowski.costscounter.data.entities.*
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +21,14 @@ class CostReportRepositoryImpl @Inject constructor(
     override fun getAllReports(): Flow<List<ReportEntity>>
     {
         return reportsDao.getAllReports()
+    }
+
+    override fun getCategory(categoryId: Int): Flow<CategoryWithItems> {
+        return reportsDao.getCategory(categoryId)
+    }
+
+    override suspend fun insertNewCategory(reportId: Int, name: String): Long {
+        return reportsDao.insertNewCategory(CategoryEntity(0, reportId, name))
     }
 
     override suspend fun insertNewItem(reportId: Int, name: String, cost: Double, amount: Int) {

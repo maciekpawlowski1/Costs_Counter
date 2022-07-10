@@ -17,6 +17,8 @@ class ReportsAdapter(private val cardItemClickListeners: CardItemClickListeners)
             notifyDataSetChanged()
     }
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportsViewHolder {
         return ReportsViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.costs_report_item, parent, false))
     }

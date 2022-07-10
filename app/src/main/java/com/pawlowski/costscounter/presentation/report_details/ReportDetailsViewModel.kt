@@ -4,10 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.pawlowski.costscounter.domain.use_cases.DeleteReportUseCase
-import com.pawlowski.costscounter.domain.use_cases.EditReportUseCase
-import com.pawlowski.costscounter.domain.use_cases.GetReportUseCase
-import com.pawlowski.costscounter.domain.use_cases.InsertItemUseCase
+import com.pawlowski.costscounter.domain.use_cases.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,6 +15,7 @@ class ReportDetailsViewModel @Inject constructor(
     private val deleteReportUseCase: DeleteReportUseCase,
     private val editReportUseCase: EditReportUseCase,
     private val insertItemUseCase: InsertItemUseCase,
+    private val insertCategoryUseCase: InsertCategoryUseCase,
     private val savedStateHandle: SavedStateHandle
 ): ViewModel() {
 
@@ -33,4 +31,10 @@ class ReportDetailsViewModel @Inject constructor(
         }
     }
 
+    fun insertNewCategory(name: String)
+    {
+        viewModelScope.launch {
+            insertCategoryUseCase.execute(reportId, name)
+        }
+    }
 }

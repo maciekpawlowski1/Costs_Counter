@@ -1,5 +1,7 @@
 package com.pawlowski.costscounter.presentation.report_details
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pawlowski.costscounter.R
+import com.pawlowski.costscounter.presentation.category.CategoryActivity
 import com.pawlowski.costscounter.presentation.report_details.dialogs.AddItemDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +39,7 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
 
         viewModel.report.observe(this)
         {
-            adapter.items = it.costItems
+            adapter.resetItemsAndCategories(it.costItems, it.categoryItems)
         }
 
 
@@ -51,7 +54,8 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
 
     private fun onAddCategoryClick(item: MenuItem)
     {
-        TODO("Not implemented yet")
+        //TODO: Add dialog with selecting name
+        viewModel.insertNewCategory("test category")
     }
 
     private fun onAddFromTemplateClick(item:MenuItem)
@@ -98,5 +102,14 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        fun launch(context: Context, reportId: Int)
+        {
+            val i = Intent(context, ReportDetailsActivity::class.java)
+            i.putExtra("reportId", reportId)
+            context.startActivity(i)
+        }
     }
 }
