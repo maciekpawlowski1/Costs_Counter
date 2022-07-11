@@ -10,11 +10,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pawlowski.costscounter.R
 import com.pawlowski.costscounter.data.entities.ReportEntity
 import com.pawlowski.costscounter.presentation.report_details.ReportDetailsActivity
+import com.pawlowski.costscounter.presentation.report_details.dialogs.DialogWithOneEditText
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ReportsActivity : AppCompatActivity(), ReportsAdapter.CardItemClickListeners {
+class ReportsActivity : AppCompatActivity(), ReportsAdapter.CardItemClickListeners,
+    DialogWithOneEditText.OnDialogButtonsClickListener {
 
     private val viewModel: ReportsActivityViewModel by viewModels()
 
@@ -54,7 +56,8 @@ class ReportsActivity : AppCompatActivity(), ReportsAdapter.CardItemClickListene
 
     private fun onAddClickListener(view: View)
     {
-        viewModel.insertNewReport("testowy report")
+        val dialog = DialogWithOneEditText(this, dialogTittle = "Add new report", inputHint = "Report name")
+        dialog.show(supportFragmentManager, "AddReportDialog")
     }
 
     override fun onDeleteClick(reportEntity: ReportEntity) {
@@ -63,6 +66,10 @@ class ReportsActivity : AppCompatActivity(), ReportsAdapter.CardItemClickListene
 
     override fun onCardClick(reportEntity: ReportEntity) {
         ReportDetailsActivity.launch(this, reportEntity.reportId)
+    }
+
+    override fun onConfirmButtonClickInDialog(name: String) {
+        viewModel.insertNewReport(name)
     }
 
 }

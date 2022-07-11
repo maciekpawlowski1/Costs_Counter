@@ -16,12 +16,14 @@ import com.pawlowski.costscounter.R
 import com.pawlowski.costscounter.data.entities.CategoryEntity
 import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.presentation.report_details.ReportItemsAdapter
+import com.pawlowski.costscounter.presentation.report_details.dialogs.DialogWithOneEditText
 import com.pawlowski.costscounter.presentation.report_details.dialogs.AddItemDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsClickListener,
-    ReportItemsAdapter.ItemOrCategoryButtonsClickListener {
+    ReportItemsAdapter.ItemOrCategoryButtonsClickListener,
+    DialogWithOneEditText.OnDialogButtonsClickListener {
 
     private lateinit var recycler: RecyclerView
     private lateinit var addButton: FloatingActionButton
@@ -62,11 +64,16 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
 
     private fun onEditNameButtonClick(v: View)
     {
-        TODO("Show dialog with changing name")
+       val dialog = DialogWithOneEditText(this, "Edit", viewModel.category.value?.categoryEntity?.categoryName, dialogTittle = "Edit category name")
+        dialog.show(supportFragmentManager, "EditDialog")
     }
 
     override fun onAddButtonInDialogClick(name: String, cost: Double, amount: Int) {
         viewModel.insertItemToCategory(name, cost, amount)
+    }
+
+    override fun onConfirmButtonClickInDialog(name: String) {
+        viewModel.editCategoryName(name)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -89,6 +96,5 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
             context.startActivity(i)
         }
     }
-
     override fun onCategoryCardClick(categoryEntity: CategoryEntity) {} //No categories here
 }

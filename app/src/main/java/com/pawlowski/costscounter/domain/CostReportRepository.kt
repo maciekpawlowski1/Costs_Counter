@@ -1,9 +1,6 @@
 package com.pawlowski.costscounter.domain
 
-import com.pawlowski.costscounter.data.entities.CategoryWithItems
-import com.pawlowski.costscounter.data.entities.CostItemEntity
-import com.pawlowski.costscounter.data.entities.ReportEntity
-import com.pawlowski.costscounter.data.entities.ReportWithItemsAndCategories
+import com.pawlowski.costscounter.data.entities.*
 import kotlinx.coroutines.flow.Flow
 
 interface CostReportRepository {
@@ -23,9 +20,13 @@ interface CostReportRepository {
 
     suspend fun deleteItem(costItemEntity: CostItemEntity)
 
+    suspend fun deleteItems(items: List<CostItemEntity>)
+
     suspend fun createNewReport(name: String, dateText: String)
 
     suspend fun editReport(report: ReportEntity)
+
+    suspend fun editCategory(categoryEntity: CategoryEntity)
 
     suspend fun deleteReport(reportId: Int)
 }

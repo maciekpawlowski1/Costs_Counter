@@ -13,4 +13,10 @@
     <item
         android:id="@+id/add_from_template_button_report_details_menu"
         android:title="Add from templates" />
+    <item
+        android:id="@+id/delete_button_report_details_menu"
+        android:icon="@drawable/delete_white"
+        android:title="Delete item"
+        android:visible="false"
+        app:showAsAction="always" />
 </menu>

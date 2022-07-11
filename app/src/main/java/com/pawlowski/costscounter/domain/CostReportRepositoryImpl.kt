@@ -43,6 +43,10 @@ class CostReportRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteItems(items: List<CostItemEntity>) {
+        reportsDao.deleteReportItems(items)
+    }
+
     override suspend fun createNewReport(name: String, dateText: String)
     {
         reportsDao.createNewReport(ReportEntity(0, name, dateText))
@@ -51,6 +55,10 @@ class CostReportRepositoryImpl @Inject constructor(
     override suspend fun editReport(report: ReportEntity)
     {
         TODO()
+    }
+
+    override suspend fun editCategory(categoryEntity: CategoryEntity) {
+        reportsDao.editCategory(categoryEntity)
     }
 
     override suspend fun deleteReport(reportId: Int)

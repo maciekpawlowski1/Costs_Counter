@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.pawlowski.costscounter.data.entities.CostItemEntity
+import com.pawlowski.costscounter.domain.use_cases.delete.DeleteItemsUseCase
 import com.pawlowski.costscounter.domain.use_cases.delete.DeleteReportUseCase
 import com.pawlowski.costscounter.domain.use_cases.edit.EditReportUseCase
 import com.pawlowski.costscounter.domain.use_cases.get.GetReportUseCase
@@ -16,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ReportDetailsViewModel @Inject constructor(
     private val getReportUseCase: GetReportUseCase,
-    private val deleteReportUseCase: DeleteReportUseCase,
+    private val deleteItemsUseCase: DeleteItemsUseCase,
     private val editReportUseCase: EditReportUseCase,
     private val insertItemUseCase: InsertItemUseCase,
     private val insertCategoryUseCase: InsertCategoryUseCase,
@@ -39,6 +41,13 @@ class ReportDetailsViewModel @Inject constructor(
     {
         viewModelScope.launch {
             insertCategoryUseCase.execute(reportId, name)
+        }
+    }
+
+    fun deleteItems(items: List<CostItemEntity>)
+    {
+        viewModelScope.launch {
+            deleteItemsUseCase.execute(items)
         }
     }
 }
