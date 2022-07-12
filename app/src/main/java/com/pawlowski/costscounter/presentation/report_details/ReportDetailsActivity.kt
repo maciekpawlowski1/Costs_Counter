@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,6 +20,7 @@ import com.pawlowski.costscounter.presentation.category.CategoryActivity
 import com.pawlowski.costscounter.presentation.report_details.dialogs.DialogWithOneEditText
 import com.pawlowski.costscounter.presentation.report_details.dialogs.AddOrEditItemDialog
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 
 
 @AndroidEntryPoint
@@ -47,6 +50,19 @@ class ReportDetailsActivity: AppCompatActivity(), AddOrEditItemDialog.AddItemDia
             adapter.resetItemsAndCategories(it.costItems, it.categoryItems)
         }
 
+        lifecycleScope.launchWhenStarted {
+            viewModel.exportingToExcelReadyFlow.collect {
+                if(it)
+                {
+                    Toast.makeText(this@ReportDetailsActivity, "Report successfully saved! You can find your file in documents", Toast.LENGTH_LONG).show()
+                }
+                else
+                {
+                    //Something went wrong
+                    Toast.makeText(this@ReportDetailsActivity, "Something went wrong", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
     }
 

@@ -16,6 +16,8 @@ import com.pawlowski.costscounter.domain.use_cases.insert.InsertItemUseCase
 import com.pawlowski.costscounter.excel_related.ExcelGeneratorFromReportClass
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -36,6 +38,9 @@ class ReportDetailsViewModel @Inject constructor(
     private val reportId = savedStateHandle.get<Int>("reportId")!!
 
     val report = getReportUseCase.execute(reportId).asLiveData()
+
+    private val exportingToExcelReadyChannel = Channel<Boolean>()
+    val exportingToExcelReadyFlow = exportingToExcelReadyChannel.receiveAsFlow()
 
 
     fun insertNewItem(name: String, cost: Double, amount:Int)
@@ -79,7 +84,13 @@ class ReportDetailsViewModel @Inject constructor(
             withContext(Dispatchers.IO)
             {
                 report.value?.let {
-                    excelGeneratorFromReportClass.createExcelFromReportEntity(it)
+                    withContext(Dispatchers.IO)
+                    {
+                        excelGeneratorFromReportClass.createExcelFromReportEntity(it)
+                    }
+                    exportingToExcelReadyChannel.send(true)
+                }?: kotlin.run {
+                    exportingToExcelReadyChannel.send(false)
                 }
             }
         }
