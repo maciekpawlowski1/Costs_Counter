@@ -98,7 +98,7 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.category_manu, menu)
+        menuInflater.inflate(R.menu.category_menu, menu)
 
         val deleteButton = menu.findItem(R.id.delete_button_category_menu)
         adapter.isSomethingSelectedLiveData.observe(this)

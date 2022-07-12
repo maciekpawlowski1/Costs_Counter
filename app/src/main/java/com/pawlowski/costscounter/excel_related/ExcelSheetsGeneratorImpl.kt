@@ -24,9 +24,11 @@ class ExcelSheetsGeneratorImpl(private val workBook: Workbook, private val style
         headerRow.createCell(0).setCellValue("Rzecz")
         headerRow.createCell(1).setCellValue("Koszt")
         headerRow.createCell(2).setCellValue("Ilość")
+        headerRow.createCell(3).setCellValue("Całość")
         headerRow.getCell(0).cellStyle = stylesUtil.boldWithBorderStyle
         headerRow.getCell(1).cellStyle = stylesUtil.boldWithBorderStyle
         headerRow.getCell(2).cellStyle = stylesUtil.boldWithBorderStyle
+        headerRow.getCell(3).cellStyle = stylesUtil.boldWithBorderStyle
 
         for(i in items.indices)
         {
@@ -35,13 +37,15 @@ class ExcelSheetsGeneratorImpl(private val workBook: Workbook, private val style
             row.createCell(0).setCellValue(item.name)
             row.createCell(1).setCellValue(item.cost)
             row.createCell(2).setCellValue(item.amount.toDouble())
+            row.createCell(3).setCellValue(item.cost * item.amount.toDouble())
+
         }
 
         val summaryRow = sheet.createRow(items.size+1)
 
-        val cellDescription = summaryRow.createCell(1)
+        val cellDescription = summaryRow.createCell(2)
         cellDescription.setCellValue("Łącznie")
-        val cellSum = summaryRow.createCell(2)
+        val cellSum = summaryRow.createCell(3)
         cellSum.cellFormula = "SUMPRODUCT(B2:B${items.size+1},C2:C${items.size+1})"
 
         cellDescription.cellStyle = stylesUtil.boldAndHighlightedStyle
