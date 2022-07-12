@@ -40,11 +40,20 @@ interface ReportsDao {
     @Delete
     suspend fun deleteReportItems(items: List<CostItemEntity>)
 
+    @Delete
+    fun deleteCategories(categories: List<CategoryEntity>)
+
+    @Query("DELETE FROM CategoryCostItemEntity WHERE categoryId IN (SELECT categoryId FROM CategoryEntity WHERE reportId = :reportId)")
+    fun deleteCategoryItemsByReportId(reportId: Int)
+
     @Query("DELETE FROM CategoryEntity WHERE reportId = :reportId")
     suspend fun deleteReportCategories(reportId: Int)
 
     @Query("DELETE FROM CategoryCostItemEntity WHERE categoryId = :categoryId")
     suspend fun deleteCategoryItems(categoryId: Int)
+
+    @Delete
+    suspend fun deleteCategoryItems(items: List<CategoryCostItemEntity>)
 
     @Update
     suspend fun editCategory(categoryEntity: CategoryEntity)

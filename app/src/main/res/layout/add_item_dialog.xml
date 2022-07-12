@@ -27,6 +27,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/costInputLayout_add_item_dialog" />
 
+        <ImageButton
+            android:id="@+id/calendar_button_add_item_dialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/calendar_icon" />
+
         <Button
             android:id="@+id/add_button_add_item_dialog"
             android:layout_width="wrap_content"

@@ -66,10 +66,27 @@ class CostReportRepositoryImpl @Inject constructor(
         withContext(NonCancellable)
         {
             reportsDao.deleteReport(reportId)
+            reportsDao.deleteCategoryItemsByReportId(reportId) //Has to be before deleteReportCategories
             reportsDao.deleteReportCategories(reportId)
             reportsDao.deleteReportItems(reportId)
-            //TODO: Delete Category Items
             //TODO: Maybe change for auto cascade delete
         }
+    }
+
+    override suspend fun deleteCategories(categories: List<CategoryWithItems>) {
+        withContext(NonCancellable)
+        {
+            for(el in categories)
+            {
+                reportsDao.deleteCategoryItems(el.categoryEntity.categoryId)
+            }
+
+            reportsDao.deleteCategories(categories.map { it.categoryEntity })
+        }
+        //TODO: Change for auto cascade delete
+    }
+
+    override suspend fun deleteCategoryItems(items: List<CategoryCostItemEntity>) {
+        reportsDao.deleteCategoryItems(items)
     }
 }

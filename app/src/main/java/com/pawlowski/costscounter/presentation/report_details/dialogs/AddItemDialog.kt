@@ -1,5 +1,6 @@
 package com.pawlowski.costscounter.presentation.report_details.dialogs
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.pawlowski.costscounter.R
+import java.util.*
 
 class AddItemDialog(private val addItemDialogButtonsClickListener: AddItemDialogButtonsClickListener): DialogFragment() {
 
@@ -38,6 +41,31 @@ class AddItemDialog(private val addItemDialogButtonsClickListener: AddItemDialog
         val nameInputLayout: TextInputLayout = view.findViewById(R.id.nameInputLayout_add_item_dialog)
         val costInputLayout: TextInputLayout = view.findViewById(R.id.costInputLayout_add_item_dialog)
         val amountInputLayout: TextInputLayout = view.findViewById(R.id.amountInputLayout_add_item_dialog)
+
+        val calendarButton: ImageButton = view.findViewById(R.id.calendar_button_add_item_dialog)
+        calendarButton.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val d = calendar.get(Calendar.DAY_OF_MONTH)
+            val m = calendar.get(Calendar.MONTH)
+            val y = calendar.get(Calendar.YEAR)
+            val dateDialog = DatePickerDialog(requireContext(),
+                { view, year, month, dayOfMonth ->
+                    val month2 = if(month < 10)
+                        "0$month"
+                    else
+                        month
+
+                    val day2 = if(dayOfMonth<10)
+                        "0$dayOfMonth"
+                    else
+                        dayOfMonth
+                    var previousName = nameInput.text.toString()
+                    previousName += "$day2.${month2}.$year"
+                    nameInput.setText(previousName)
+
+                }, y, m, d)
+            dateDialog.show()
+        }
 
         cancelButton.setOnClickListener {
             dismiss()

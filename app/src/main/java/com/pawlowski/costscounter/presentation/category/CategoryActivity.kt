@@ -3,6 +3,7 @@ package com.pawlowski.costscounter.presentation.category
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.pawlowski.costscounter.R
+import com.pawlowski.costscounter.data.entities.CategoryCostItemEntity
 import com.pawlowski.costscounter.data.entities.CategoryEntity
 import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.presentation.report_details.ReportItemsAdapter
@@ -45,6 +47,7 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = adapter
 
+
         addButton.setOnClickListener(this::onAddButtonClick)
         editNameButton.setOnClickListener(this::onEditNameButtonClick)
 
@@ -68,6 +71,13 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
         dialog.show(supportFragmentManager, "EditDialog")
     }
 
+    private fun onDeleteButtonClick(item: MenuItem)
+    {
+        val selected = adapter.getSelectedItems()
+        adapter.unselectAll()
+        viewModel.deleteItems(selected.map { CategoryCostItemEntity(it.itemId, viewModel.category.value!!.categoryEntity.categoryId, it.name, it.cost, it.amount) })
+    }
+
     override fun onAddButtonInDialogClick(name: String, cost: Double, amount: Int) {
         viewModel.insertItemToCategory(name, cost, amount)
     }
@@ -76,12 +86,40 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
         viewModel.editCategoryName(name)
     }
 
+    override fun onBackPressed() {
+        if(adapter.isSomethingSelected())
+        {
+            adapter.unselectAll()
+        }
+        else
+        {
+            super.onBackPressed()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.category_manu, menu)
+
+        val deleteButton = menu.findItem(R.id.delete_button_category_menu)
+        adapter.isSomethingSelectedLiveData.observe(this)
+        {
+            deleteButton.isVisible = it
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId)
         {
             android.R.id.home ->
             {
                 onBackPressed()
+                return true
+            }
+            R.id.delete_button_category_menu ->
+            {
+                onDeleteButtonClick(item)
                 return true
             }
         }

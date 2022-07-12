@@ -69,7 +69,7 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
 
     private fun onShareButtonClick(item: MenuItem)
     {
-        TODO("Not implemented yet")
+        viewModel.saveToExcel()
     }
 
     private fun onDeleteButtonClick(item: MenuItem)
@@ -85,7 +85,7 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
 
         if(selectedCategories.isNotEmpty())
         {
-            TODO()
+            viewModel.deleteCategories(selectedCategories)
         }
     }
 
