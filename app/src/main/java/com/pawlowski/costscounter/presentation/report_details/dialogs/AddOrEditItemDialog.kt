@@ -64,10 +64,10 @@ class AddOrEditItemDialog(private val addItemDialogButtonsClickListener: AddItem
             val y = calendar.get(Calendar.YEAR)
             val dateDialog = DatePickerDialog(requireContext(),
                 { view, year, month, dayOfMonth ->
-                    val month2 = if(month < 10)
-                        "0$month"
+                    val month2 = if(month+1 < 10)
+                        "0${month+1}"
                     else
-                        month
+                        month+1
 
                     val day2 = if(dayOfMonth<10)
                         "0$dayOfMonth"

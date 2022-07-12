@@ -33,10 +33,10 @@ class ReportsActivityViewModel @Inject constructor(
             else
                 "${calendar.get(Calendar.DAY_OF_MONTH)}"
 
-            val month = if(calendar.get(Calendar.MONTH) < 10)
-                "0${calendar.get(Calendar.MONTH)}"
+            val month = if(calendar.get(Calendar.MONTH)+1 < 10)
+                "0${calendar.get(Calendar.MONTH)+1}"
                 else
-                    "${calendar.get(Calendar.MONTH)}"
+                    "${calendar.get(Calendar.MONTH)+1}"
 
             val dateText = "${day}.${month}.${calendar.get(Calendar.YEAR)}"
             insertReportUseCase.execute(name, dateText)
