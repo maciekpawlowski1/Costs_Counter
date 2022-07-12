@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pawlowski.costscounter.R
 import com.pawlowski.costscounter.data.entities.CategoryEntity
+import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.presentation.category.CategoryActivity
 import com.pawlowski.costscounter.presentation.report_details.dialogs.DialogWithOneEditText
-import com.pawlowski.costscounter.presentation.report_details.dialogs.AddItemDialog
+import com.pawlowski.costscounter.presentation.report_details.dialogs.AddOrEditItemDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsClickListener,
+class ReportDetailsActivity: AppCompatActivity(), AddOrEditItemDialog.AddItemDialogButtonsClickListener,
     ReportItemsAdapter.ItemOrCategoryButtonsClickListener,
     DialogWithOneEditText.OnDialogButtonsClickListener {
 
@@ -52,7 +53,7 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
 
     private fun onAddButtonClick(v: View)
     {
-        val dialog = AddItemDialog(this)
+        val dialog = AddOrEditItemDialog(this)
         dialog.show(supportFragmentManager, "addItemDialog")
     }
 
@@ -94,7 +95,7 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
     }
 
 
-    override fun onAddButtonInDialogClick(name: String, cost: Double, amount: Int) {
+    override fun onConfirmButtonInAddEditItemDialogClick(name: String, cost: Double, amount: Int) {
         viewModel.insertNewItem(name, cost, amount)
     }
 
@@ -176,5 +177,20 @@ class ReportDetailsActivity: AppCompatActivity(), AddItemDialog.AddItemDialogBut
 
     override fun onCategoryCardClick(categoryEntity: CategoryEntity) {
         CategoryActivity.launch(this, categoryEntity.categoryId)
+    }
+
+    override fun onItemCardClick(costItemEntity: CostItemEntity) {
+        val dialog = AddOrEditItemDialog(object: AddOrEditItemDialog.AddItemDialogButtonsClickListener
+        {
+            override fun onConfirmButtonInAddEditItemDialogClick(
+                name: String,
+                cost: Double,
+                amount: Int
+            ) {
+                viewModel.editItem(costItemEntity.copy(name = name, cost = cost, amount = amount))
+            }
+
+        }, "Edit", costItemEntity.name, costItemEntity.cost, costItemEntity.amount)
+        dialog.show(supportFragmentManager, "editItemDialog")
     }
 }

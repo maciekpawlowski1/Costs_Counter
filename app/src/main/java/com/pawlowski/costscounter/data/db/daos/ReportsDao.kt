@@ -57,4 +57,10 @@ interface ReportsDao {
 
     @Update
     suspend fun editCategory(categoryEntity: CategoryEntity)
+
+    @Update
+    suspend fun editItem(costItemEntity: CostItemEntity)
+
+    @Update
+    suspend fun editItem(categoryCostItemEntity: CategoryCostItemEntity)
 }

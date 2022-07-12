@@ -8,6 +8,7 @@ import com.pawlowski.costscounter.data.entities.CategoryWithItems
 import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.domain.use_cases.delete.DeleteCategoriesUseCase
 import com.pawlowski.costscounter.domain.use_cases.delete.DeleteItemsUseCase
+import com.pawlowski.costscounter.domain.use_cases.edit.EditItemUseCase
 import com.pawlowski.costscounter.domain.use_cases.edit.EditReportUseCase
 import com.pawlowski.costscounter.domain.use_cases.get.GetReportUseCase
 import com.pawlowski.costscounter.domain.use_cases.insert.InsertCategoryUseCase
@@ -25,6 +26,7 @@ class ReportDetailsViewModel @Inject constructor(
     private val deleteItemsUseCase: DeleteItemsUseCase,
     private val deleteCategoriesUseCase: DeleteCategoriesUseCase,
     private val editReportUseCase: EditReportUseCase,
+    private val editItemUseCase: EditItemUseCase,
     private val insertItemUseCase: InsertItemUseCase,
     private val insertCategoryUseCase: InsertCategoryUseCase,
     private val excelGeneratorFromReportClass: ExcelGeneratorFromReportClass,
@@ -61,6 +63,13 @@ class ReportDetailsViewModel @Inject constructor(
     {
         viewModelScope.launch {
             deleteCategoriesUseCase.execute(categories)
+        }
+    }
+
+    fun editItem(costItemEntity: CostItemEntity)
+    {
+        viewModelScope.launch {
+            editItemUseCase.execute(costItemEntity)
         }
     }
 

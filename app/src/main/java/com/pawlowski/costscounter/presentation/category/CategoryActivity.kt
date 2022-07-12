@@ -19,11 +19,11 @@ import com.pawlowski.costscounter.data.entities.CategoryEntity
 import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.presentation.report_details.ReportItemsAdapter
 import com.pawlowski.costscounter.presentation.report_details.dialogs.DialogWithOneEditText
-import com.pawlowski.costscounter.presentation.report_details.dialogs.AddItemDialog
+import com.pawlowski.costscounter.presentation.report_details.dialogs.AddOrEditItemDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsClickListener,
+class CategoryActivity: AppCompatActivity(), AddOrEditItemDialog.AddItemDialogButtonsClickListener,
     ReportItemsAdapter.ItemOrCategoryButtonsClickListener,
     DialogWithOneEditText.OnDialogButtonsClickListener {
 
@@ -61,7 +61,7 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
 
     private fun onAddButtonClick(v: View)
     {
-        val dialog = AddItemDialog(this)
+        val dialog = AddOrEditItemDialog(this)
         dialog.show(supportFragmentManager, "addItemDialog")
     }
 
@@ -78,7 +78,7 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
         viewModel.deleteItems(selected.map { CategoryCostItemEntity(it.itemId, viewModel.category.value!!.categoryEntity.categoryId, it.name, it.cost, it.amount) })
     }
 
-    override fun onAddButtonInDialogClick(name: String, cost: Double, amount: Int) {
+    override fun onConfirmButtonInAddEditItemDialogClick(name: String, cost: Double, amount: Int) {
         viewModel.insertItemToCategory(name, cost, amount)
     }
 
@@ -135,4 +135,20 @@ class CategoryActivity: AppCompatActivity(), AddItemDialog.AddItemDialogButtonsC
         }
     }
     override fun onCategoryCardClick(categoryEntity: CategoryEntity) {} //No categories here
+
+
+    override fun onItemCardClick(costItemEntity: CostItemEntity) {
+        val dialog = AddOrEditItemDialog(object: AddOrEditItemDialog.AddItemDialogButtonsClickListener
+        {
+            override fun onConfirmButtonInAddEditItemDialogClick(
+                name: String,
+                cost: Double,
+                amount: Int
+            ) {
+                viewModel.editItem(CategoryCostItemEntity(costItemEntity.itemId, viewModel.category.value!!.categoryEntity.categoryId, name, cost, amount))
+            }
+
+        }, "Edit", costItemEntity.name, costItemEntity.cost, costItemEntity.amount)
+        dialog.show(supportFragmentManager, "editItemDialog")
+    }
 }

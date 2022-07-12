@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.pawlowski.costscounter.data.entities.CategoryCostItemEntity
+import com.pawlowski.costscounter.data.entities.CostItemEntity
 import com.pawlowski.costscounter.domain.use_cases.delete.DeleteItemsUseCase
 import com.pawlowski.costscounter.domain.use_cases.edit.EditCategoryUseCase
+import com.pawlowski.costscounter.domain.use_cases.edit.EditItemUseCase
 import com.pawlowski.costscounter.domain.use_cases.get.GetCategoryUseCase
 import com.pawlowski.costscounter.domain.use_cases.insert.InsertItemToCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,11 +43,20 @@ class CategoryActivityViewModel @Inject constructor(
         }
     }
 
+    fun editItem(costItemEntity: CategoryCostItemEntity)
+    {
+        viewModelScope.launch {
+            editCategoryUseCase.execute(costItemEntity)
+        }
+    }
+
     fun deleteItems(items: List<CategoryCostItemEntity>)
     {
         viewModelScope.launch {
             deleteItemsUseCase.executeCategoryItems(items)
         }
     }
+
+
 
 }

@@ -61,6 +61,14 @@ class CostReportRepositoryImpl @Inject constructor(
         reportsDao.editCategory(categoryEntity)
     }
 
+    override suspend fun editItem(costItemEntity: CostItemEntity) {
+        reportsDao.editItem(costItemEntity)
+    }
+
+    override suspend fun editItem(categoryCostItemEntity: CategoryCostItemEntity) {
+        reportsDao.editItem(categoryCostItemEntity)
+    }
+
     override suspend fun deleteReport(reportId: Int)
     {
         withContext(NonCancellable)

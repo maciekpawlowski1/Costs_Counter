@@ -28,6 +28,10 @@ interface CostReportRepository {
 
     suspend fun editCategory(categoryEntity: CategoryEntity)
 
+    suspend fun editItem(costItemEntity: CostItemEntity)
+
+    suspend fun editItem(categoryCostItemEntity: CategoryCostItemEntity)
+
     suspend fun deleteReport(reportId: Int)
 
     suspend fun deleteCategories(categories: List<CategoryWithItems>)

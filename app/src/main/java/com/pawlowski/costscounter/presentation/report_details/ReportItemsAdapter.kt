@@ -88,7 +88,7 @@ class ReportItemsAdapter(private val itemOrCategoryButtonsClickListener: ItemOrC
                 }
                 else
                 {
-
+                    itemOrCategoryButtonsClickListener.onItemCardClick(currentItem)
                 }
             }
 
@@ -187,5 +187,6 @@ class ReportItemsAdapter(private val itemOrCategoryButtonsClickListener: ItemOrC
     interface ItemOrCategoryButtonsClickListener
     {
         fun onCategoryCardClick(categoryEntity: CategoryEntity)
+        fun onItemCardClick(costItemEntity: CostItemEntity)
     }
 }

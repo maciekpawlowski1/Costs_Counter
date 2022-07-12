@@ -16,7 +16,12 @@ import com.google.android.material.textfield.TextInputLayout
 import com.pawlowski.costscounter.R
 import java.util.*
 
-class AddItemDialog(private val addItemDialogButtonsClickListener: AddItemDialogButtonsClickListener): DialogFragment() {
+class AddOrEditItemDialog(private val addItemDialogButtonsClickListener: AddItemDialogButtonsClickListener,
+                          private val secondButtonText: String = "Add",
+                          private val startName: String = "",
+                          private val startCost: Double = -1.0,
+                          private val startAmount: Int = 1
+                          ): DialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,9 +39,18 @@ class AddItemDialog(private val addItemDialogButtonsClickListener: AddItemDialog
         val cancelButton: Button = view.findViewById(R.id.cancel_button_add_item_dialog)
         val addButton: Button = view.findViewById(R.id.add_button_add_item_dialog)
 
+        addButton.text = secondButtonText
+
         val nameInput: TextInputEditText = view.findViewById(R.id.name_input_add_item_dialog)
         val costInput: TextInputEditText = view.findViewById(R.id.cost_input_add_item_dialog)
         val amountInput: TextInputEditText = view.findViewById(R.id.amount_input_add_item_dialog)
+        nameInput.setText(startName)
+        if(startCost != -1.0)
+        {
+            costInput.setText("$startCost")
+        }
+        amountInput.setText("$startAmount")
+
 
         val nameInputLayout: TextInputLayout = view.findViewById(R.id.nameInputLayout_add_item_dialog)
         val costInputLayout: TextInputLayout = view.findViewById(R.id.costInputLayout_add_item_dialog)
@@ -97,7 +111,7 @@ class AddItemDialog(private val addItemDialogButtonsClickListener: AddItemDialog
 
             if(!isError)
             {
-                addItemDialogButtonsClickListener.onAddButtonInDialogClick(name, cost.toDouble(), amount.toInt())
+                addItemDialogButtonsClickListener.onConfirmButtonInAddEditItemDialogClick(name, cost.toDouble(), amount.toInt())
                 dismiss()
             }
 
@@ -109,6 +123,6 @@ class AddItemDialog(private val addItemDialogButtonsClickListener: AddItemDialog
 
     interface AddItemDialogButtonsClickListener
     {
-        fun onAddButtonInDialogClick(name: String, cost: Double, amount: Int)
+        fun onConfirmButtonInAddEditItemDialogClick(name: String, cost: Double, amount: Int)
     }
 }
